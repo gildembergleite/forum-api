@@ -46,20 +46,21 @@ export class Question extends Entity<QuestionConstructorProps> {
     const startDate = new Date()
     const endDate = new Date(this.createdAt)
     const oneDayInMilliseconds = 24 * 60 * 60 * 1000
-    const differenceInMilliseconds =
-      Math.abs(startDate.getTime() - endDate.getTime())
+    const differenceInMilliseconds = Math.abs(
+      startDate.getTime() - endDate.getTime(),
+    )
     const differenceInDays = differenceInMilliseconds / oneDayInMilliseconds
-    
+
     return differenceInDays < 3
   }
 
   static create(
     props: Optional<QuestionConstructorProps, 'createdAt'>,
-    id?: UniqueEntityId
+    id?: UniqueEntityId,
   ) {
     const propsWithCreatedAt = {
       ...props,
-      createdAt: new Date()
+      createdAt: new Date(),
     }
     const question = new Question({ props: propsWithCreatedAt, id })
     return question

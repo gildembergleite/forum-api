@@ -1,6 +1,6 @@
-import { validate as isUUID, v4 as uuid } from 'uuid';
-import { describe, expect, it } from 'vitest';
-import { UniqueEntityId } from './unique-entity-id';
+import { validate as isUUID, v4 as uuid } from 'uuid'
+import { describe, expect, it } from 'vitest'
+import { UniqueEntityId } from './unique-entity-id'
 
 describe('create UniqueEntityId', () => {
   it('should generate a unique UUID when value is not provided', () => {

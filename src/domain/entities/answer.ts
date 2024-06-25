@@ -10,7 +10,8 @@ export interface AnswerConstructorProps {
   updatedAt?: Date
 }
 
-export class Answer extends Entity<AnswerConstructorProps> {
+export class Answer extends
+  Entity<AnswerConstructorProps> {
   get content() {
     return this.props.content
   }
@@ -31,13 +32,17 @@ export class Answer extends Entity<AnswerConstructorProps> {
     return this.props.updatedAt
   }
 
+  get except() {
+    return this.content.substring(0, 120).trim().concat('...')
+  }
+
   static create(
     props: Optional<AnswerConstructorProps, 'createdAt'>,
-    id?: UniqueEntityId
+    id?: UniqueEntityId,
   ) {
     const propsWithCreatedAt = {
       ...props,
-      createdAt: new Date()
+      createdAt: new Date(),
     }
     const answer = new Answer({ props: propsWithCreatedAt, id })
     return answer
