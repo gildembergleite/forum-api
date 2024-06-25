@@ -54,12 +54,37 @@ export class Question extends Entity<QuestionConstructorProps> {
     return differenceInDays < 3
   }
 
+  get excerpt() {
+    return this.content.substring(0, 120).trim().concat('...')
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
+
+  set title(text: string) {
+    this.props.title = text
+    this.props.slug = Slug.createFromText({ text })
+    this.touch()
+  }
+
+  set content(text: string) {
+    this.props.content = text
+    this.touch()
+  }
+
+  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
+    this.props.bestAnswerId = bestAnswerId
+    this.touch()
+  }
+
   static create(
-    props: Optional<QuestionConstructorProps, 'createdAt'>,
+    props: Optional<QuestionConstructorProps, 'createdAt' | 'slug'>,
     id?: UniqueEntityId,
   ) {
     const propsWithCreatedAt = {
       ...props,
+      slug: props.slug ?? Slug.createFromText({ text: props.title }),
       createdAt: new Date(),
     }
     const question = new Question({ props: propsWithCreatedAt, id })
