@@ -10,8 +10,7 @@ export interface AnswerConstructorProps {
   updatedAt?: Date
 }
 
-export class Answer extends
-  Entity<AnswerConstructorProps> {
+export class Answer extends Entity<AnswerConstructorProps> {
   get content() {
     return this.props.content
   }
@@ -32,7 +31,7 @@ export class Answer extends
     return this.props.updatedAt
   }
 
-  get except() {
+  get excerpt() {
     return this.content.substring(0, 120).trim().concat('...')
   }
 
