@@ -1,6 +1,6 @@
 import { Entity } from '../core/entities/entity'
+import { UniqueEntityId } from '../core/entities/unique-entity-id'
 import { Optional } from '../core/types/optional'
-import { UniqueEntityId } from './value-objects/unique-entity-id'
 
 export interface AnswerConstructorProps {
   content: string
@@ -15,7 +15,26 @@ export class Answer extends Entity<AnswerConstructorProps> {
     return this.props.content
   }
 
-  static create(props: Optional<AnswerConstructorProps, 'createdAt'>, id?: UniqueEntityId) {
+  get instructorId() {
+    return this.props.instructorId
+  }
+
+  get questionId() {
+    return this.props.questionId
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  static create(
+    props: Optional<AnswerConstructorProps, 'createdAt'>,
+    id?: UniqueEntityId
+  ) {
     const propsWithCreatedAt = {
       ...props,
       createdAt: new Date()

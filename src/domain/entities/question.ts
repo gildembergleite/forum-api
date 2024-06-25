@@ -1,7 +1,7 @@
 import { Entity } from '../core/entities/entity'
+import { UniqueEntityId } from '../core/entities/unique-entity-id'
 import { Optional } from '../core/types/optional'
 import { Slug } from './value-objects/slug'
-import { UniqueEntityId } from './value-objects/unique-entity-id'
 
 export interface QuestionConstructorProps {
   title: string
@@ -14,7 +14,49 @@ export interface QuestionConstructorProps {
 }
 
 export class Question extends Entity<QuestionConstructorProps> {
-  static create(props: Optional<QuestionConstructorProps, 'createdAt'>, id?: UniqueEntityId) {
+  get title() {
+    return this.props.title
+  }
+
+  get slug() {
+    return this.props.slug
+  }
+
+  get content() {
+    return this.props.content
+  }
+
+  get studentId() {
+    return this.props.studentId
+  }
+
+  get bestAnswerId() {
+    return this.props.bestAnswerId
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  get isNew() {
+    const startDate = new Date()
+    const endDate = new Date(this.createdAt)
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000
+    const differenceInMilliseconds =
+      Math.abs(startDate.getTime() - endDate.getTime())
+    const differenceInDays = differenceInMilliseconds / oneDayInMilliseconds
+    
+    return differenceInDays < 3
+  }
+
+  static create(
+    props: Optional<QuestionConstructorProps, 'createdAt'>,
+    id?: UniqueEntityId
+  ) {
     const propsWithCreatedAt = {
       ...props,
       createdAt: new Date()
