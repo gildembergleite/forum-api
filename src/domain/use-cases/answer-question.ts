@@ -1,4 +1,5 @@
 import { Answer } from '../entities/answer'
+import { AnswerRepository } from '../repositories/answer-repository'
 
 export interface AnswerQuestionUseCaseExecuteProps {
   instructorId: string
@@ -7,8 +8,20 @@ export interface AnswerQuestionUseCaseExecuteProps {
 }
 
 export class AnswerQuestionUseCase {
-  execute({ content }: AnswerQuestionUseCaseExecuteProps) {
-    const answer = new Answer({ content })
+  private answerRepository: AnswerRepository
+
+  constructor({ answerRepository }: { answerRepository: AnswerRepository }) {
+    this.answerRepository = answerRepository
+  }
+
+  async execute({
+    instructorId,
+    questionId,
+    content,
+  }: AnswerQuestionUseCaseExecuteProps) {
+    const answer = new Answer({ instructorId, questionId, content })
+
+    await this.answerRepository.create(answer)
 
     return answer
   }
