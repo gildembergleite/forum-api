@@ -1,6 +1,6 @@
+import { Answer } from '@/domain/entities/answer'
+import { AnswerRepository } from '@/domain/repositories/answer-repository'
 import { expect, test } from 'vitest'
-import { Answer } from '../entities/answer'
-import { AnswerRepository } from '../repositories/answer-repository'
 import { AnswerQuestionUseCase } from './answer-question'
 
 const mockAnswerRepository: AnswerRepository = {
