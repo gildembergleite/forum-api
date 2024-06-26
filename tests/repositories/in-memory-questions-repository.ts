@@ -19,4 +19,20 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
     return question
   }
+
+  async deleteByQuestionId(questionId: string): Promise<Question | null> {
+    const question = this.questions.find(
+      (question) => question.id.toValue() === questionId,
+    )
+
+    if (!question) {
+      return null
+    }
+
+    this.questions = this.questions.filter(
+      (question) => question.id.toValue() !== questionId,
+    )
+
+    return question
+  }
 }
