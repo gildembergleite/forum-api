@@ -7,7 +7,7 @@ export interface QuestionConstructorProps {
   title: string
   slug: Slug
   content: string
-  studentId: UniqueEntityId
+  authorId: UniqueEntityId
   bestAnswerId?: UniqueEntityId
   createdAt: Date
   updatedAt?: Date
@@ -26,8 +26,8 @@ export class Question extends Entity<QuestionConstructorProps> {
     return this.props.content
   }
 
-  get studentId() {
-    return this.props.studentId
+  get authorId() {
+    return this.props.authorId
   }
 
   get bestAnswerId() {

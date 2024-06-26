@@ -4,7 +4,7 @@ import { Optional } from '@/core/types/optional'
 
 export interface AnswerConstructorProps {
   content: string
-  instructorId: UniqueEntityId
+  authorId: UniqueEntityId
   questionId: UniqueEntityId
   createdAt: Date
   updatedAt?: Date
@@ -15,8 +15,8 @@ export class Answer extends Entity<AnswerConstructorProps> {
     return this.props.content
   }
 
-  get instructorId() {
-    return this.props.instructorId
+  get authorId() {
+    return this.props.authorId
   }
 
   get questionId() {
