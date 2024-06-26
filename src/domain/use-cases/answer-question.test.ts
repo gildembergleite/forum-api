@@ -1,23 +1,26 @@
-import { Answer } from '@/domain/entities/answer'
-import { AnswersRepository } from '@/domain/repositories/answers-repository'
+import { InMemoryAnswersRepository } from 'tests/repositories/in-memory-answers-repository'
 import { AnswerQuestionUseCase } from './answer-question'
 
-const mockAnswersRepository: AnswersRepository = {
-  create: async (answer: Answer) => {
-    console.log(answer)
-  },
-}
+let inMemoryAnswersRepository: InMemoryAnswersRepository
+let sut: AnswerQuestionUseCase
 
-test('create an answer', async () => {
-  const answerQuestion = new AnswerQuestionUseCase({
-    answersRepository: mockAnswersRepository,
+describe('AnswerQuestion', () => {
+  beforeEach(() => {
+    inMemoryAnswersRepository = new InMemoryAnswersRepository()
+    sut = new AnswerQuestionUseCase({
+      answersRepository: inMemoryAnswersRepository,
+    })
   })
 
-  const answer = await answerQuestion.execute({
-    authorId: 'author-id',
-    questionId: 'question-id',
-    content: 'This is the content of the answer',
-  })
+  test('create an answer', async () => {
+    const { answer } = await sut.execute({
+      authorId: 'author-id',
+      questionId: 'question-id',
+      content: 'This is the content of the answer',
+    })
 
-  expect(answer.content).toEqual('This is the content of the answer')
+    expect(answer.authorId.toValue()).toEqual('author-id')
+    expect(answer.questionId.toValue()).toEqual('question-id')
+    expect(answer.content).toEqual('This is the content of the answer')
+  })
 })
