@@ -1,9 +1,8 @@
 import { Answer } from '@/domain/entities/answer'
-import { AnswerRepository } from '@/domain/repositories/answer-repository'
-import { expect, test } from 'vitest'
+import { AnswersRepository } from '@/domain/repositories/answers-repository'
 import { AnswerQuestionUseCase } from './answer-question'
 
-const mockAnswerRepository: AnswerRepository = {
+const mockAnswersRepository: AnswersRepository = {
   create: async (answer: Answer) => {
     console.log(answer)
   },
@@ -11,11 +10,11 @@ const mockAnswerRepository: AnswerRepository = {
 
 test('create an answer', async () => {
   const answerQuestion = new AnswerQuestionUseCase({
-    answerRepository: mockAnswerRepository,
+    answersRepository: mockAnswersRepository,
   })
 
   const answer = await answerQuestion.execute({
-    instructorId: 'instructor-id',
+    authorId: 'author-id',
     questionId: 'question-id',
     content: 'This is the content of the answer',
   })
