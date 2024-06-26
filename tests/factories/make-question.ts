@@ -1,12 +1,13 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Question, QuestionConstructorProps } from '@/domain/entities/question'
+import { faker } from '@faker-js/faker'
 
 export function makeQuestion(
   overrides: Partial<QuestionConstructorProps> = {},
 ) {
   const question = Question.create({
-    title: 'Example slug test title',
-    content: 'Example slug test content',
+    title: faker.lorem.paragraph(),
+    content: faker.lorem.paragraphs(5),
     authorId: new UniqueEntityId(),
     ...overrides,
   })
