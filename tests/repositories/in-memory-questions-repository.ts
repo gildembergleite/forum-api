@@ -8,6 +8,18 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     this.questions.push(question)
   }
 
+  async delete(question: Question): Promise<Question | null> {
+    // this.questions = this.questions.filter((item) => item.id !== question.id)
+
+    const questionIndex = this.questions.findIndex(
+      (item) => item.id === question.id,
+    )
+
+    this.questions.splice(questionIndex, 1)
+
+    return question
+  }
+
   async findBySlug(slug: string): Promise<Question | null> {
     const question = this.questions.find(
       (question) => question.slug.value === slug,
@@ -20,7 +32,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     return question
   }
 
-  async deleteByQuestionId(questionId: string): Promise<Question | null> {
+  async findById(questionId: string): Promise<Question | null> {
     const question = this.questions.find(
       (question) => question.id.toValue() === questionId,
     )
@@ -28,10 +40,6 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     if (!question) {
       return null
     }
-
-    this.questions = this.questions.filter(
-      (question) => question.id.toValue() !== questionId,
-    )
 
     return question
   }
